@@ -1,3 +1,68 @@
+import java.util.List;
+
 public class turma {
+    private List<estudante> alunos;
+    private professor professor;
+    private disciplina disciplina;
+    private int ano;
+    private int semestre;
+
+    public turma(List<estudante> alunos, professor professor, disciplina disciplina, int ano, int semestre) {
+        this.alunos = alunos;
+        this.professor = professor;
+        this.disciplina = disciplina;
+        this.ano = ano;
+        this.semestre = semestre;
+    }
+
+    public void setAlunos(List<estudante> alunos) {
+        this.alunos = alunos;
+    }
+
+    // metodo lista
+    public boolean adicionarEstudante(estudante aluno) {
+        return alunos.add(aluno);
+    }
+
+    // metodo lista
+    public boolean removerEstudante(estudante aluno) {
+        return alunos.remove(aluno);
+    }
+
+    public void setProfessor(professor professor) {
+        this.professor = professor;
+    }
+
+    public void setDisciplina(disciplina disciplina) {
+        this.disciplina = disciplina;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public void setSemestre(int semestre) {
+        this.semestre = semestre;
+    }
+
+    public List<estudante> getAlunos() {
+        return alunos;
+    }
+
+    public professor getProfessor() {
+        return professor;
+    }
+
+    public disciplina getDisciplina() {
+        return disciplina;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public int getSemestre() {
+        return semestre;
+    }
 
 }

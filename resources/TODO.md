@@ -1,7 +1,10 @@
 # To-Do List
 
-- Implement `Student` class
-- Implement `Teacher` class
-- Implement `Course` class
-- Implement `Turma` class
-- Implement search methods for the classes
+- [x] Implement `estudante` class
+- [x] Implement `professor` class
+- [x] Implement `disciplina` class
+- [x] Implement `turma` class
+- [ ] Implement `departamento` class
+- [ ] Implement search methods for the classes
+- [ ] Implement auto-populate
+- [ ] Implement main

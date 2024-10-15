@@ -1,27 +1,27 @@
 public class postGrad extends estudante {
-    professor orientador;
     String tema;
+    String dataDefesa;
 
-    public postGrad(String nome, String dataNascimento, String CPF, Float CRA, professor orientador, String tema) {
+    public postGrad(String nome, String dataNascimento, String CPF, Float CRA, String tema, String dataDefesa) {
         super(nome, dataNascimento, CPF, CRA);
-        this.orientador = orientador;
         this.tema = tema;
-    }
-
-    public void setOrientador(professor orientador) {
-        this.orientador = orientador;
+        this.dataDefesa = dataDefesa;
     }
 
     public void setTema(String tema) {
         this.tema = tema;
     }
 
-    public professor getOrientador() {
-        return orientador;
+    public void setDataDefesa(String dataDefesa) {
+        this.dataDefesa = dataDefesa;
     }
 
     public String getTema() {
         return tema;
+    }
+
+    public String getDataDefesa() {
+        return dataDefesa;
     }
 
 }

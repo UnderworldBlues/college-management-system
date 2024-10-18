@@ -43,4 +43,9 @@ public class estudante {
         return CRA;
     }
 
+    @Override
+    public String toString() {
+        return "Nome: " + nome + "\nData de Nascimento: " + dataNascimento + "\nCPF: " + CPF + "\nCRA: " + CRA;
+    }
+
 }

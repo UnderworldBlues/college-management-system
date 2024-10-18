@@ -19,16 +19,6 @@ public class turma {
         this.alunos = alunos;
     }
 
-    // metodo lista
-    public boolean adicionarEstudante(estudante aluno) {
-        return alunos.add(aluno);
-    }
-
-    // metodo lista
-    public boolean removerEstudante(estudante aluno) {
-        return alunos.remove(aluno);
-    }
-
     public void setProfessor(professor professor) {
         this.professor = professor;
     }
@@ -63,6 +53,37 @@ public class turma {
 
     public int getSemestre() {
         return semestre;
+    }
+
+    // metodos lista
+    public boolean adicionarEstudante(estudante aluno) {
+        return alunos.add(aluno);
+    }
+
+    public boolean removerEstudante(String CPF) {
+
+        for (estudante aluno : alunos) {
+            if (aluno.getCPF().equals(CPF)) {
+                alunos.remove(aluno);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void showStudentList() {
+        for (estudante aluno : alunos) {
+            System.out.println(aluno);
+        }
+    }
+
+    public estudante searchStudent(String CPF) {
+        for (estudante aluno : alunos) {
+            if (aluno.getCPF().equals(CPF)) {
+                return aluno;
+            }
+        }
+        return null;
     }
 
 }

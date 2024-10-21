@@ -5,6 +5,6 @@
 - [x] Implement `professor` class
 - [x] Implement `disciplina` class
 - [x] Implement `turma` class
-- [ ] Implement search methods for the classes
-- [ ] Implement auto-populate
-- [ ] Implement main
+- [x] Implement search methods for the classes
+- [x] Implement auto-populate
+- [ ] Finish main

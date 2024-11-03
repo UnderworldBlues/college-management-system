@@ -1,11 +1,11 @@
-public class professor {
+public class Professor {
     private String nome;
     private String dataNascimento;
     private String CPF;
     private String inicioContrato;
     private String departamento;
 
-    public professor(String nome, String dataNascimento, String CPF, String inicioContrato, String departamento) {
+    public Professor(String nome, String dataNascimento, String CPF, String inicioContrato, String departamento) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.CPF = CPF;
@@ -51,5 +51,10 @@ public class professor {
 
     public String getDepartamento() {
         return departamento;
+    }
+
+    @Override
+    public String toString() {
+        return "Nome: " + nome + "\nData de Nascimento: " + dataNascimento + "\nCPF: " + CPF + "\nInicio do Contrato: " + inicioContrato + "\nDepartamento: " + departamento;
     }
 }

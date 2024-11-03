@@ -1,9 +1,9 @@
-public class disciplina {
-    private String nome;
-    private String codigo;
-    private String cargaHoraria;
+public abstract class Disciplina {
+    protected String nome;
+    protected String codigo;
+    protected String cargaHoraria;
 
-    public disciplina(String nome, String codigo, String cargaHoraria) {
+    public Disciplina(String nome, String codigo, String cargaHoraria) {
         this.nome = nome;
         this.codigo = codigo;
         this.cargaHoraria = cargaHoraria;
@@ -32,5 +32,7 @@ public class disciplina {
     public String getCargaHoraria() {
         return cargaHoraria;
     }
+
+    public abstract String mostrarDados();  
 
 }

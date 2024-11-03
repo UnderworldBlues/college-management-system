@@ -1,30 +1,31 @@
 import java.util.List;
 
-public class turma {
-    private List<estudante> alunos;
-    private professor professor;
-    private disciplina disciplina;
+public class Turma extends Disciplina {
+    private List<Estudante> alunos;
+    private Professor professor;
     private int ano;
     private int semestre;
 
-    public turma(List<estudante> alunos, professor professor, disciplina disciplina, int ano, int semestre) {
+    public Turma(List<Estudante> alunos, Professor professor, int ano, int semestre, String disNome, String disCodigo, String disCargaHoraria) {
+        super(disNome, disCodigo, disCargaHoraria);
         this.alunos = alunos;
         this.professor = professor;
-        this.disciplina = disciplina;
         this.ano = ano;
         this.semestre = semestre;
     }
 
-    public void setAlunos(List<estudante> alunos) {
+    public void setAlunos(List<Estudante> alunos) {
         this.alunos = alunos;
     }
 
-    public void setProfessor(professor professor) {
+    public void setProfessor(Professor professor) {
         this.professor = professor;
     }
 
-    public void setDisciplina(disciplina disciplina) {
-        this.disciplina = disciplina;
+    public void setDisciplina(String disNome, String disCodigo, String disCargaHoraria) {
+        super.setNome(disNome);
+        super.setCodigo(disCodigo);
+        super.setCargaHoraria(disCargaHoraria);
     }
 
     public void setAno(int ano) {
@@ -35,17 +36,14 @@ public class turma {
         this.semestre = semestre;
     }
 
-    public List<estudante> getAlunos() {
+    public List<Estudante> getAlunos() {
         return alunos;
     }
 
-    public professor getProfessor() {
+    public Professor getProfessor() {
         return professor;
     }
 
-    public disciplina getDisciplina() {
-        return disciplina;
-    }
 
     public int getAno() {
         return ano;
@@ -56,13 +54,13 @@ public class turma {
     }
 
     // metodos lista
-    public boolean adicionarEstudante(estudante aluno) {
+    public boolean adicionarEstudante(Estudante aluno) {
         return alunos.add(aluno);
     }
 
     public boolean removerEstudante(String CPF) {
 
-        for (estudante aluno : alunos) {
+        for (Estudante aluno : alunos) {
             if (aluno.getCPF().equals(CPF)) {
                 alunos.remove(aluno);
                 return true;
@@ -72,18 +70,24 @@ public class turma {
     }
 
     public void showStudentList() {
-        for (estudante aluno : alunos) {
+        for (Estudante aluno : alunos) {
             System.out.println(aluno);
         }
     }
 
-    public estudante searchStudent(String CPF) {
-        for (estudante aluno : alunos) {
+    public Estudante searchStudent(String CPF) {
+        for (Estudante aluno : alunos) {
             if (aluno.getCPF().equals(CPF)) {
                 return aluno;
             }
         }
         return null;
+    }
+
+    // metodo abstrato
+    @Override
+    public String mostrarDados() {
+        return "Nome: " + super.getNome() + "\nCodigo: " + super.getCodigo() + "\nCarga Horaria: " + super.getCargaHoraria() + "\nAno: " + ano + "\nSemestre: " + semestre;
     }
 
 }

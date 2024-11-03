@@ -1,8 +1,8 @@
-public class postGrad extends estudante {
+public class PostGrad extends Estudante {
     String tema;
     String dataDefesa;
 
-    public postGrad(String nome, String dataNascimento, String CPF, Float CRA, String tema, String dataDefesa) {
+    public PostGrad(String nome, String dataNascimento, String CPF, Float CRA, String tema, String dataDefesa) {
         super(nome, dataNascimento, CPF, CRA);
         this.tema = tema;
         this.dataDefesa = dataDefesa;
@@ -22,6 +22,11 @@ public class postGrad extends estudante {
 
     public String getDataDefesa() {
         return dataDefesa;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nTema: " + tema + "\nData de Defesa: " + dataDefesa;
     }
 
 }

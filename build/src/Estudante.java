@@ -1,10 +1,10 @@
-public class estudante {
-    private String nome;
-    private String dataNascimento;
-    private String CPF;
-    private Float CRA;
+public class Estudante {
+    protected String nome;
+    protected String dataNascimento;
+    protected String CPF;
+    protected Float CRA;
     
-    public estudante(String nome, String dataNascimento, String CPF, Float CRA) {
+    public Estudante(String nome, String dataNascimento, String CPF, Float CRA) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.CPF = CPF;

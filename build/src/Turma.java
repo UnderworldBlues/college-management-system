@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Turma extends Disciplina {
+public class Turma extends Disciplina implements Exibivel{
     private List<Estudante> alunos;
     private Professor professor;
     private int ano;

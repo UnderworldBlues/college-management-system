@@ -1,4 +1,4 @@
-public class Estudante {
+public class Estudante implements Exibivel {
     protected String nome;
     protected String dataNascimento;
     protected String CPF;
@@ -43,8 +43,7 @@ public class Estudante {
         return CRA;
     }
 
-    @Override
-    public String toString() {
+    public String mostrarDados() {
         return "Nome: " + nome + "\nData de Nascimento: " + dataNascimento + "\nCPF: " + CPF + "\nCRA: " + CRA;
     }
 

@@ -1,4 +1,4 @@
-public class Grad extends Estudante {
+public class Grad extends Estudante implements Exibivel{
     String estagio;
     String  dataInicioEstagio;
 
@@ -25,8 +25,8 @@ public class Grad extends Estudante {
     }
 
     @Override
-    public String toString() {
-        return super.toString() + "\nEstágio: " + estagio + "\nData de Início do Estágio: " + dataInicioEstagio;
+    public String mostrarDados() {
+        return super.mostrarDados() + "\nEstágio: " + estagio + "\nData de Início do Estágio: " + dataInicioEstagio;
     }
 
 }

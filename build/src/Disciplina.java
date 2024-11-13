@@ -1,4 +1,4 @@
-public abstract class Disciplina {
+public abstract class Disciplina{
     protected String nome;
     protected String codigo;
     protected String cargaHoraria;

@@ -1,4 +1,4 @@
-public class Professor {
+public class Professor implements Exibivel{
     private String nome;
     private String dataNascimento;
     private String CPF;
@@ -53,8 +53,7 @@ public class Professor {
         return departamento;
     }
 
-    @Override
-    public String toString() {
+    public String mostrarDados() {
         return "Nome: " + nome + "\nData de Nascimento: " + dataNascimento + "\nCPF: " + CPF + "\nInicio do Contrato: " + inicioContrato + "\nDepartamento: " + departamento;
     }
 }

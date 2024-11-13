@@ -13,7 +13,7 @@ public class main {
         System.out.println("Bem vindo.");
         while (true) 
         {
-            System.out.println("Escolha uma opcao:\n1- Estudante\n2- Professor\n3- Turma\n4- Sair");
+            System.out.println("Escolha uma opcao:\n1- Estudante\n2- Professor\n3- Turma\n4- Disciplina\n5- Sair");
             opt = sc.nextInt();
             switch (opt) {
                 case 1:
@@ -26,15 +26,16 @@ public class main {
                     classMenu(turmas);
                     break;
                 case 4:
+                    //disciplineMenu(turmas);
+                    break;
+                case 5:
                     System.out.println("buh-bye!");
-                    sc.close();
                     System.exit(0);
                 default:
                     System.out.println("Opcao invalida.");
                     break;
             }  
         }
-
     }
 
     // cria entradas estaticas para turmas
@@ -170,7 +171,6 @@ public class main {
 
                 case 4:
                     // volta para o menu principal
-                    sc.close();
                     return; 
 
                 default:
@@ -188,8 +188,19 @@ public class main {
             switch(opt)
             {
                 case 1:
+                    // pega dados do usuario
+                    System.out.println("Digite o nome do professor:");
+                    String nome = sc.next();
+                    System.out.println("Digite a data de nascimento do professor:");
+                    String dataNascimento = sc.next();
+                    System.out.println("Digite o CPF do professor:");
+                    String CPF = sc.next();
+                    System.out.println("Digite a data de inicio do contrato do professor:");
+                    String inicioContrato = sc.next();
+                    System.out.println("Digite o departamento do professor:");
+                    String departamento = sc.next();
 
-                    Professor temp = getProfessorData();
+                    Professor temp = new Professor(nome, dataNascimento, CPF, inicioContrato, departamento);
 
                     System.out.println("Digite o codigo da turma que deseja adicionar o professor:");
                     String turma = sc.next();
@@ -230,92 +241,64 @@ public class main {
                     break;
 
                 case 4:
-                    sc.close();
                     return;
 
                 default:
-                    System.out.println("opcao invalida");
             }
 
     }
 
     private static void classMenu(Map<String, Turma> turmas){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Voce deseja:\n1- Adicionar uma turma\n2- Visualizar as informacoes de uma turma\n3- remover uma turma\n4- Voltar");
-        int opt = sc.nextInt();
-
-        switch (opt)
-        {
-            case 1:
-
-                System.out.println("Digite o codigo da turma:");
-                String codigo = sc.next();
-                if(turmas.containsKey(codigo))
-                {
-                    System.out.println("Turma ja existente.");
-                    break;
-                }
-                System.out.println("Digite o ano da turma:");
-                int ano = sc.nextInt();
-                System.out.println("Digite o semestre da turma:");
-                int semestre = sc.nextInt();
-                System.out.println("Digite o nome da disciplina:");
-                String disNome = sc.next();
-                System.out.println("Digite o codigo da disciplina:");
-                String disCodigo = sc.next();
-                System.out.println("Digite a carga horaria da disciplina:");
-                String disCargaHoraria = sc.next();
-                Professor prof = getProfessorData();
-                turmas.put(codigo, new Turma(new ArrayList<Estudante>(100), prof, ano, semestre, disNome, disCodigo, disCargaHoraria));
-            
-                break;
-            case 2:
-
-                System.out.println("Digite o codigo da turma:");
-                String turma = sc.next();
-                if(turmas.containsKey(turma))
-                    System.out.println(turmas.get(turma));
-                else
-                    System.out.println("Turma nao encontrada.");
-                break;
-
-            case 3:
-
-                System.out.println("Digite o codigo da turma:");
-                turma = sc.next();
-                if(turmas.containsKey(turma))
-                    turmas.remove(turma);
-                else
-                    System.out.println("Turma nao existe.");
-                
-                System.out.println("Turma removida com sucesso.");
-                break;
-
-            case 4:
-                break;
-            default:
-        }
+        System.out.println("");
 
     }
 
-    private static Professor getProfessorData()
-    {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o nome do professor:");
-        String nome = sc.next();
-        System.out.println("Digite a data de nascimento do professor:");
-        String dataNascimento = sc.next();
-        System.out.println("Digite o CPF do professor:");
-        String CPF = sc.next();
-        System.out.println("Digite a data de inicio do contrato do professor:");
-        String inicioContrato = sc.next();
-        System.out.println("Digite o departamento do professor:");
-        String departamento = sc.next();
-        
-        sc.close();
-        return new Professor(nome, dataNascimento, CPF, inicioContrato, departamento);
-    }
+    // private static void disciplineMenu(Map<String, Turma> turmas){
+    //     Scanner sc = new Scanner(System.in);
+    //     System.out.println("Voce deseja: 1- Visualizar disciplinas de todas as turmas\n2- Visualizar disciplinas de uma turma especifica\n3- Atualizar uma disciplina\n4- Voltar");
+    //     int opt = sc.nextInt();
+    //     while(true) 
+    //         switch(opt)
+    //         {
+    //             case 1:
+    //                 for (Map.Entry<String, turma> entry : turmas.entrySet()) 
+    //                     System.out.println("Turma: " + entry.getKey() + "\nDisciplina: " + entry.getValue().getDisciplina().toString());
+    //                 break;
+    //             case 2:
+    //                 System.out.println("Digite o codigo da turma:");
+    //                 String turma = sc.next();
+    //                 // confere se a turma existe
+    //                 if(turmas.containsKey(turma))
+    //                     // se sim, imprime a disciplina da turma
+    //                     System.out.println(turmas.get(turma).getDisciplina());
+    //                 else
+    //                     System.out.println("Turma nao encontrada.");
+    //                 break;
+    //             case 3:
+    //                 System.out.println("Digite o codigo da turma:");
+    //                 turma = sc.next();
+    //                 // confere se a turma existe (dnv)
+    //                 if(!turmas.containsKey(turma))
+    //                 {
+    //                     System.out.println("Turma nao encontrada.");
+    //                     break;
+    //                 }
+    //                 System.out.println("Digite o nome da disciplina:");
+    //                 String nome = sc.next();
+    //                 System.out.println("Digite o codigo da disciplina:");
+    //                 String codigo = sc.next();
+    //                 System.out.println("Digite a carga horaria da disciplina:");
+    //                 String cargaHoraria = sc.next();
+    //                 turmas.get(turma).setDisciplina(new disciplina(nome, codigo, cargaHoraria));
+    //                 break;
 
+    //             case 4:
+    //                 return;
+
+    //             default:
+    //         }
+    // }
 
     private static Estudante getStudentData () {
 
@@ -340,7 +323,6 @@ public class main {
                 System.out.println("Digite a data de inicio do estagio do estudante:");
                 String dataInicioEstagio = sc.next();
 
-                sc.close();
                 // cria um objeto do tipo bachelor temporario
                 return new Grad(nome, dataNascimento, CPF, CRA, estagio, dataInicioEstagio);
             case 2:
@@ -358,19 +340,14 @@ public class main {
                 System.out.println("Digite a data de defesa da dissertacao do estudante:");
                 String dataDefesa = sc.next();
 
-                sc.close();
                 // cria um objeto do tipo postGrad temporario
                 return new PostGrad(nome, dataNascimento, CPF, CRA, tema, dataDefesa);
             case 3:
-                sc.close();
                 return null;
             default:
                 System.out.println("Opcao invalida.");
-                sc.close();
                 return null;
         }
 
     }
-
-    
 }

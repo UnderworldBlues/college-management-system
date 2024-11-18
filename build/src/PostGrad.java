@@ -1,4 +1,4 @@
-public class PostGrad extends Estudante implements Exibivel{
+public class PostGrad extends Estudante implements Exibivel, ToTXT{
     String tema;
     String dataDefesa;
 
@@ -27,6 +27,11 @@ public class PostGrad extends Estudante implements Exibivel{
     @Override
     public String mostrarDados() {
         return super.mostrarDados() + "\nTema: " + tema + "\nData de Defesa: " + dataDefesa;
+    }
+
+    @Override
+    public String toTXT() {
+        return this.nome + "," + this.dataNascimento + "," + this.CPF + "," + this.CRA + "," + this.tema + "," + this.dataDefesa;
     }
 
 }

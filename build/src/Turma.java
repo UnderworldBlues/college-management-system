@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Turma extends Disciplina implements Exibivel{
@@ -8,7 +9,7 @@ public class Turma extends Disciplina implements Exibivel{
 
     public Turma(List<Estudante> alunos, Professor professor, int ano, int semestre, String disNome, String disCodigo, String disCargaHoraria) {
         super(disNome, disCodigo, disCargaHoraria);
-        this.alunos = alunos;
+        this.alunos = new ArrayList<Estudante>(alunos);
         this.professor = professor;
         this.ano = ano;
         this.semestre = semestre;
@@ -71,7 +72,8 @@ public class Turma extends Disciplina implements Exibivel{
 
     public void showStudentList() {
         for (Estudante aluno : alunos) {
-            System.out.println(aluno);
+            System.out.println(aluno.mostrarDados());
+            System.out.println("\n\n\n");
         }
     }
 
@@ -87,7 +89,7 @@ public class Turma extends Disciplina implements Exibivel{
     // metodo abstrato
     @Override
     public String mostrarDados() {
-        return "Nome: " + super.getNome() + "\nCodigo: " + super.getCodigo() + "\nCarga Horaria: " + super.getCargaHoraria() + "\nAno: " + ano + "\nSemestre: " + semestre;
+        return "Nome: " + super.getNome() + "\nCodigo: " + super.getCodigo() + "\nCarga Horaria: " + super.getCargaHoraria() + "\nAno: " + ano + "\nSemestre: " + semestre + "\n\n\n";
     }
 
 }

@@ -1,4 +1,4 @@
-public class Professor implements Exibivel{
+public class Professor implements Exibivel, ToTXT{
     private String nome;
     private String dataNascimento;
     private String CPF;
@@ -54,6 +54,11 @@ public class Professor implements Exibivel{
     }
 
     public String mostrarDados() {
-        return "Nome: " + nome + "\nData de Nascimento: " + dataNascimento + "\nCPF: " + CPF + "\nInicio do Contrato: " + inicioContrato + "\nDepartamento: " + departamento;
+        return "Nome: " + nome + "\nData de Nascimento: " + dataNascimento + "\nCPF: " + CPF + "\nInicio do Contrato: " + inicioContrato + "\nDepartamento: " + departamento + "\n\n\n";
+    }
+
+    @Override
+    public String toTXT() {
+       return  this.nome + "," + this.dataNascimento + "," + this.CPF + "," + this.inicioContrato + "," + this.departamento;
     }
 }

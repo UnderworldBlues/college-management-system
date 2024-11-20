@@ -11,7 +11,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         // lista de notas
         ArrayList<Notas> notas = populateNotas();
-        if (notas == null) 
+        if (notas == null)
         {
             System.out.println("Erro ao popular notas. Too bad!");
             sc.close();
@@ -19,7 +19,7 @@ public class Main {
         }
         // mapa de turmas
         Map<String, Turma> turmas = populate();
-        if (turmas == null) 
+        if (turmas == null)
         {
             System.out.println("Erro ao popular turmas. Too bad!");
             sc.close();
@@ -30,22 +30,24 @@ public class Main {
         while (true) {
             System.out.println("Escolha uma opcao:\n1- Estudante\n2- Professor\n3- Turma\n4- Notas\n5- Sair");
             opt = sc.nextInt();
+            sc.nextLine();
+
             switch (opt) {
                 case 1:
 
                     studentMenu(turmas, notas, sc);
                     break;
-                
+
                 case 2:
-                    
+
                     teacherMenu(turmas, sc);
                     break;
-                
+
                 case 3:
-                               
+
                     classMenu(turmas, sc);
                     break;
-                
+
                 case 4:
                     notaMenu(notas, turmas, sc);
                     break;
@@ -56,7 +58,7 @@ public class Main {
                     writeNotas(notas);
                     sc.close();
                     System.exit(0);
-                
+
                 default:
                     System.out.println("\n\n\n");
                     System.out.println("Opcao invalida.");
@@ -71,6 +73,8 @@ public class Main {
         while (true) {
             System.out.println("Escolha uma opcao:\n1- Adicionar estudante\n2- Remover estudante\n3- Visualizar informacoes de estudante\n4- Sair");
             int opt = sc.nextInt();
+            sc.nextLine();
+
             try {
                 switch (opt) {
                     case 1:
@@ -82,7 +86,7 @@ public class Main {
                         }
 
                         System.out.println("Digite o codigo da turma que deseja adicionar o estudante:");
-                        String turma = sc.next();
+                        String turma = sc.nextLine();
                         if (!turmas.containsKey(turma)) {
                             throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
                         }
@@ -97,12 +101,12 @@ public class Main {
                     case 2:
 
                         System.out.println("Digite o codigo da turma do estudante que deseja remover:");
-                        turma = sc.next();
+                        turma = sc.nextLine();
                         if (!turmas.containsKey(turma)) {
                             throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
                         }
                         System.out.println("Digite o CPF do estudante que deseja remover:");
-                        String CPF = sc.next();
+                        String CPF = sc.nextLine();
 
                         if (turmas.get(turma).removerEstudante(CPF))
                             System.out.println("Estudante removido com sucesso.");
@@ -114,6 +118,7 @@ public class Main {
 
                         System.out.println("Voce deseja:\n1- Visualizar lista de estudantes\n2- Visualizar informacoes de um estudante especifico\n3- Voltar");
                         int opt2 = sc.nextInt();
+                        sc.nextLine();
 
                         if (opt2 == 1) {
                             System.out.println("Digite o codigo da turma:");
@@ -122,17 +127,17 @@ public class Main {
                                 turmas.get(turma).showStudentList();
                             else
                                 throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
-                        } 
-                        else if (opt2 == 2) 
+                        }
+                        else if (opt2 == 2)
                         {
                             System.out.println("Digite o CPF do estudante:");
-                            CPF = sc.next();
+                            CPF = sc.nextLine();
                             // procura o estudante em todas as turmas
-                            for (Map.Entry<String, Turma> entry : turmas.entrySet()) 
+                            for (Map.Entry<String, Turma> entry : turmas.entrySet())
                             {
                                 Estudante tempEst = entry.getValue().searchStudent(CPF);
                                 // no primeiro acerto, printa as informações do estudante e suas notas
-                                if (tempEst != null) 
+                                if (tempEst != null)
                                 {
                                     System.out.println(tempEst.mostrarDados());
                                     System.out.println("Notas do estudante:");
@@ -156,8 +161,8 @@ public class Main {
                     default:
                         System.out.println("Opcao invalida.");
                 }
-            } 
-            catch (TurmaNaoEncontrada e) 
+            }
+            catch (TurmaNaoEncontrada e)
             {
                 System.out.println(e.getMessage());
             }
@@ -171,13 +176,15 @@ public class Main {
             {
                 System.out.println("Voce deseja:\n1- Adicionar professor\n2- Remover professor\n3- Visualizar informacoes de professor\n4- Voltar");
                 int opt = sc.nextInt();
+                sc.nextLine();
+
                 switch (opt) {
                     case 1:
 
                         Professor temp = getProfessorData(sc);
 
                         System.out.println("Digite o codigo da turma que deseja adicionar o professor:");
-                        String turma = sc.next();
+                        String turma = sc.nextLine();
                         if (turmas.containsKey(turma))
                         {
                             turmas.get(turma).setProfessor(temp);
@@ -189,7 +196,7 @@ public class Main {
 
                     case 2:
                         System.out.println("Digite o codigo da turma do professor que deseja remover:");
-                        turma = sc.next();
+                        turma = sc.nextLine();
                         if (turmas.containsKey(turma)){
                             turmas.get(turma).setProfessor(null);
                         }
@@ -200,7 +207,7 @@ public class Main {
                     case 3:
 
                         System.out.println("Digite o CPF do professor:");
-                        String CPF = sc.next();
+                        String CPF = sc.nextLine();
                         int marker = 0; // pra garantir q tempProf só seja setado uma vez
                         Professor tempProf = null;
                         ArrayList<String> turmasDoProf = new ArrayList<>();
@@ -244,12 +251,12 @@ public class Main {
             System.out.println(e.getMessage());
         }
     }
-    
+
     private static void classMenu(Map<String, Turma> turmas, Scanner sc) {
         System.out.println("=======================");
         while (true) {
-          System.out.println("\n\n\n"); 
-            
+            System.out.println("\n\n\n");
+
             try {
                 System.out.println("Voce deseja:\n1- Adicionar uma turma\n2- Visualizar as informacoes de uma turma\n3- Remover uma turma\n4- Voltar");
                 int opt = sc.nextInt();
@@ -258,19 +265,21 @@ public class Main {
 
                 switch (opt) {
                     case 1:
-                        
+
                         System.out.println("\n\n\n");
                         System.out.println("Digite o codigo da turma:");
                         String codigo = sc.nextLine();
-                        if (turmas.containsKey(codigo)) 
+                        if (turmas.containsKey(codigo))
                         {
                             System.out.println("Turma ja existente.");
                             break;
                         }
                         System.out.println("Digite o ano da turma:");
                         int ano = sc.nextInt();
+                        sc.nextLine();
                         System.out.println("Digite o semestre da turma:");
                         int semestre = sc.nextInt();
+                        sc.nextLine();
                         System.out.println("Digite o nome da disciplina:");
                         String disNome = sc.nextLine();
                         System.out.println("Digite o codigo da disciplina:");
@@ -284,7 +293,7 @@ public class Main {
                         break;
 
                     case 2:
-                        
+
                         System.out.println("\n\n\n");
                         System.out.println("Digite o codigo da turma:");
                         turma = sc.nextLine();
@@ -295,13 +304,13 @@ public class Main {
                         }
                         else
                             throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
-                        
+
                         System.out.println("\n\n\n");
 
                         break;
 
                     case 3:
-                        
+
                         System.out.println("\n\n\n");
                         System.out.println("Digite o codigo da turma:");
                         turma = sc.nextLine();
@@ -309,10 +318,10 @@ public class Main {
                             turmas.remove(turma);
                         else
                             throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
-                        
+
                         System.out.println("Turma removida com sucesso.");
                         System.out.println("\n\n\n");
-                        
+
                         break;
 
                     case 4:
@@ -322,9 +331,9 @@ public class Main {
                         System.out.println("=======================");
                         System.out.println("\n\n\n");
                         return;
-                    
+
                     default:
-                        
+
                         System.out.println("\n\n\n");
                         System.out.println("Opçao Invalida.");
                         System.out.println("\n\n\n");
@@ -334,14 +343,16 @@ public class Main {
                 System.out.println(e.getMessage());
                 System.out.println("\n\n\n");
             }
-        } 
-    } 
+        }
+    }
 
     private static void notaMenu(ArrayList<Notas> notas, Map<String, Turma> turmas, Scanner sc) {
         System.out.println("=======================");
         while (true) {
             System.out.println("Escolha uma opcao:\n1- Visualizar notas de um estudante\n2- Visualizar media de uma turma\n3- Sair");
             int opt = sc.nextInt();
+            sc.nextLine();
+
             switch (opt)
             {
                 case 1 :
@@ -350,12 +361,14 @@ public class Main {
                     String CPF = sc.next();
                     System.out.println("Voce deseja:\n1- Visualizar a nota em uma turma especifica\n2- Visualizar todas as notas\n3- Visualizar a media do aluno\n4- Atualizar a nota de um aluno\n5- Adicionar uma nova nota\n");
                     int opt2 = sc.nextInt();
+                    sc.nextLine();
+
                     switch (opt2)
                     {
                         case 1:
                             System.out.println("\n\n\n");
                             System.out.println("Digite o codigo da turma:");
-                            String turma = sc.next();
+                            String turma = sc.nextLine();
                             for(Notas n : notas)
                             {
                                 if(n.getAlunoCPF().equals(CPF))
@@ -391,7 +404,7 @@ public class Main {
                             try {
                                 System.out.println("\n\n\n");
                                 System.out.println("Digite o codigo da turma:");
-                                turma = sc.next();
+                                turma = sc.nextLine();
                                 if(turmas.containsKey(turma)){
                                     System.out.println("Digite a nota:");
                                     float nota = sc.nextFloat();
@@ -448,7 +461,7 @@ public class Main {
                     try{
                         System.out.println("\n\n\n");
                         System.out.println("Digite o codigo da turma:");
-                        String turma = sc.next();
+                        String turma = sc.nextLine();
                         if(turmas.containsKey(turma))
                         {
                             float media = 0;
@@ -459,14 +472,14 @@ public class Main {
                                     media += n.getMedia();
                                     size++;
                                 }
-                            
+
                             System.out.println("Media da turma: " + media/size);
                         }
                         else
                             throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
                         break;
 
-                    }catch(TurmaNaoEncontrada e)    
+                    }catch(TurmaNaoEncontrada e)
                     {
                         System.out.println(e.getMessage());
                         System.out.println("\n\n\n");
@@ -504,36 +517,50 @@ public class Main {
 
         System.out.println("Voce deseja:\n1- Adicionar estudante da graduacao\n2- Adicionar estudante da pos graduacao\n3-Voltar");
         int opt = sc.nextInt();
+        sc.nextLine();
 
         switch (opt) {
             case 1:
                 // pega dados do usuario
                 System.out.println("Digite o nome do estudante:");
                 String nome = sc.nextLine();
+                System.out.println("\n");
                 System.out.println("Digite a data de nascimento do estudante:");
-                String dataNascimento = sc.next();
+                String dataNascimento = sc.nextLine();
+                System.out.println("\n");
                 System.out.println("Digite o CPF do estudante:");
-                String CPF = sc.next();
+                String CPF = sc.nextLine();
+                System.out.println("\n");
                 System.out.println("Digite o CRA do estudante:");
                 Float CRA = sc.nextFloat();
+                sc.nextLine();
+                System.out.println("\n");
                 System.out.println("Digite o nome da empresa de estagio do estudante:");
-                String estagio = sc.next();
+                String estagio = sc.nextLine();
+                System.out.println("\n");
                 System.out.println("Digite a data de inicio do estagio do estudante:");
-                String dataInicioEstagio = sc.next();
+                String dataInicioEstagio = sc.nextLine();
+                System.out.println("\n");
                 // cria um objeto do tipo grad temporario
                 return new Grad(nome, dataNascimento, CPF, CRA, estagio, dataInicioEstagio);
             case 2:
                 // pega dados do usuario
                 System.out.println("Digite o nome do estudante:");
                 nome = sc.nextLine();
+                System.out.println("\n");
                 System.out.println("Digite a data de nascimento do estudante:");
-                dataNascimento = sc.next();
+                dataNascimento = sc.nextLine();
+                System.out.println("\n");
                 System.out.println("Digite o CPF do estudante:");
-                CPF = sc.next();
+                CPF = sc.nextLine();
+                System.out.println("\n");
                 System.out.println("Digite o CRA do estudante:");
                 CRA = sc.nextFloat();
+                sc.nextLine();
+                System.out.println("\n");
                 System.out.println("Digite o tema da dissertacao do estudante:");
-                String tema = sc.next();
+                String tema = sc.nextLine();
+                System.out.println("\n");
                 // cria um objeto do tipo postGrad temporario
                 return new PostGrad(nome, dataNascimento, CPF, CRA, tema);
             case 3:
@@ -551,104 +578,104 @@ public class Main {
     // cria entradas estaticas para turmas
     private static Map<String, Turma> populate() {
 
-            Map<String, Turma> turmas = new HashMap<>();
-            // abre o arquivo
-            try(BufferedReader reader = new BufferedReader(new FileReader("data.txt")))
+        Map<String, Turma> turmas = new HashMap<>();
+        // abre o arquivo
+        try(BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Leonardo\\Downloads\\college-management-system-main (2)\\college-management-system-main\\build\\src\\data.txt")))
+        {
+            // o arquivo é estruturado da seguinte maneira: nome da turma; info da disciplina; info do professor; ano; semestre
+            // e as informações dos estudantes.
+            String buffer = reader.readLine();
+            while(buffer != null)
             {
-                // o arquivo é estruturado da seguinte maneira: nome da turma; info da disciplina; info do professor; ano; semestre
-                // e as informações dos estudantes. 
-                String buffer = reader.readLine();
-                while(buffer != null)
-                {   
-                    // pega o nome da turma
-                    String turmaNome = buffer;
-                    // pega as informações da disciplina
-                    String[] disciplina = reader.readLine().split(",");
-                    // pega as informações do professor
-                    String[] professor = reader.readLine().split(",");
-                    // pega o ano e o semestre
-                    int ano = Integer.parseInt(reader.readLine());
-                    int semestre = Integer.parseInt(reader.readLine());
-                    // pega as informações dos estudantes
-                    String[] alunos = reader.readLine().split(";");
-                    // pra isso, criamos uma lista de estudantes
-                    ArrayList<Estudante> estudantes = new ArrayList<>();
-                    // iteramos sobre os estudantes
-                    for(String aluno : alunos)
-                    {
-                        // particionamos as informações do estudante
-                        String[] info = aluno.split(",");
-                        Float CRA = Float.parseFloat(info[3]);
-    
-                        // se o aluno for da gradução, ele tem 6 campos de informação, se for da pós, ele tem 5
-                        if(info.length == 6)
-                            estudantes.add(new Grad(info[0], info[1], info[2], CRA, info[4], info[5]));
-                        else
-                            estudantes.add(new PostGrad(info[0], info[1], info[2], CRA, info[4]));
-                        
-                    }
-    
-                    Professor prof = new Professor(professor[0], professor[1], professor[2], professor[3], professor[4]);
-                    // adiciona a turma ao mapa
-                    turmas.put(turmaNome, new Turma(estudantes, prof, ano, semestre, disciplina[0], disciplina[1], disciplina[2]));
-    
-                    // lemos a próxima linha
-                    buffer = reader.readLine();
-                }
-                // fechamos o arquivo
-                reader.close();
-    
-            }catch(IOException e)
-            {
-                System.out.println("Erro ao abrir o arquivo.");
-                return null;
-            }
-            // retornamos o mapa
-            return turmas;
-    
-        }
-
-        // metodo pra popular notas
-    private static ArrayList<Notas> populateNotas() {
-        
-            // criamos uma lista de notas
-            ArrayList<Notas> notas = new ArrayList<>();
-            // abrimos o arquivo
-            try(BufferedReader reader = new BufferedReader(new FileReader("dataNotas.txt")))
-            {
-                // o arquivo é estruturado da seguinte maneira: CPF do aluno; turma; nota
-                String buffer = reader.readLine();
-                while(buffer != null)
+                // pega o nome da turma
+                String turmaNome = buffer;
+                // pega as informações da disciplina
+                String[] disciplina = reader.readLine().split(",");
+                // pega as informações do professor
+                String[] professor = reader.readLine().split(",");
+                // pega o ano e o semestre
+                int ano = Integer.parseInt(reader.readLine());
+                int semestre = Integer.parseInt(reader.readLine());
+                // pega as informações dos estudantes
+                String[] alunos = reader.readLine().split(";");
+                // pra isso, criamos uma lista de estudantes
+                ArrayList<Estudante> estudantes = new ArrayList<>();
+                // iteramos sobre os estudantes
+                for(String aluno : alunos)
                 {
-                    String alunoCPF = buffer;
-                    String[] listaDeNotas = reader.readLine().split(";");
-                    for(String notasItem : listaDeNotas)
-                    {
-                        String[] info = notasItem.split(",");
-                        String turma = info[0];
-                        Float nota = Float.parseFloat(info[1]);
-                        Notas n = new Notas(alunoCPF);
-                        n.setNota(nota);
-                        n.setTurma(turma);
-                        notas.add(n);
-                    }
-                    buffer = reader.readLine();
+                    // particionamos as informações do estudante
+                    String[] info = aluno.split(",");
+                    Float CRA = Float.parseFloat(info[3]);
+
+                    // se o aluno for da gradução, ele tem 6 campos de informação, se for da pós, ele tem 5
+                    if(info.length == 6)
+                        estudantes.add(new Grad(info[0], info[1], info[2], CRA, info[4], info[5]));
+                    else
+                        estudantes.add(new PostGrad(info[0], info[1], info[2], CRA, info[4]));
+
                 }
-                // fechamos o arquivo
-                reader.close();
-            }catch(IOException e)
-            {
-                System.out.println("Erro ao abrir o arquivo.");
-                return null;
+
+                Professor prof = new Professor(professor[0], professor[1], professor[2], professor[3], professor[4]);
+                // adiciona a turma ao mapa
+                turmas.put(turmaNome, new Turma(estudantes, prof, ano, semestre, disciplina[0], disciplina[1], disciplina[2]));
+
+                // lemos a próxima linha
+                buffer = reader.readLine();
             }
-            // retornamos a lista
-            return notas;
+            // fechamos o arquivo
+            reader.close();
+
+        }catch(IOException e)
+        {
+            System.out.println("Erro ao abrir o arquivo.");
+            return null;
+        }
+        // retornamos o mapa
+        return turmas;
+
+    }
+
+    // metodo pra popular notas
+    private static ArrayList<Notas> populateNotas() {
+
+        // criamos uma lista de notas
+        ArrayList<Notas> notas = new ArrayList<>();
+        // abrimos o arquivo
+        try(BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Leonardo\\Downloads\\college-management-system-main (2)\\college-management-system-main\\build\\src\\dataNotas.txt")))
+        {
+            // o arquivo é estruturado da seguinte maneira: CPF do aluno; turma; nota
+            String buffer = reader.readLine();
+            while(buffer != null)
+            {
+                String alunoCPF = buffer;
+                String[] listaDeNotas = reader.readLine().split(";");
+                for(String notasItem : listaDeNotas)
+                {
+                    String[] info = notasItem.split(",");
+                    String turma = info[0];
+                    Float nota = Float.parseFloat(info[1]);
+                    Notas n = new Notas(alunoCPF);
+                    n.setNota(nota);
+                    n.setTurma(turma);
+                    notas.add(n);
+                }
+                buffer = reader.readLine();
+            }
+            // fechamos o arquivo
+            reader.close();
+        }catch(IOException e)
+        {
+            System.out.println("Erro ao abrir o arquivo.");
+            return null;
+        }
+        // retornamos a lista
+        return notas;
     }
 
     // função pra salvar as turmas
     public static void writeTurmas(Map<String, Turma> turmas)
     {
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("data.txt")))
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Leonardo\\Downloads\\college-management-system-main (2)\\college-management-system-main\\build\\src\\data.txt")))
         {
             for(Map.Entry<String, Turma> entry : turmas.entrySet())
             {
@@ -672,16 +699,16 @@ public class Main {
                 writer.newLine();
                 for(Estudante aluno : entry.getValue().getAlunos())
                 {
-                   if(aluno instanceof Grad)
-                   {
-                       Grad g = (Grad) aluno;
-                       writer.write(g.toTXT());
-                   }
-                   else
-                   {
-                       PostGrad pg = (PostGrad) aluno;
-                       writer.write(pg.toTXT());
-                   }
+                    if(aluno instanceof Grad)
+                    {
+                        Grad g = (Grad) aluno;
+                        writer.write(g.toTXT());
+                    }
+                    else
+                    {
+                        PostGrad pg = (PostGrad) aluno;
+                        writer.write(pg.toTXT());
+                    }
                 }
                 writer.newLine();
             }
@@ -695,7 +722,7 @@ public class Main {
     // função pra salvar as notas
     public static void writeNotas(ArrayList<Notas> notas)
     {
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("dataNotas.txt")))
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Leonardo\\Downloads\\college-management-system-main (2)\\college-management-system-main\\build\\src\\dataNotas.txt")))
         {
             for(Notas n : notas)
             {

@@ -110,7 +110,7 @@ public class Turma extends Disciplina implements Exibivel{
     // metodo abstrato
     @Override
     public String mostrarDados() {
-        return "Disciplina: " + super.getNome() + "\nCodigo: " + super.getCodigo() + "\nCarga Horaria: " + super.getCargaHoraria() + "\nAno: " + ano + "\nSemestre: " + semestre + "\nProfessor:" + professor.getNome() + professor.getCPF() + "\n\n\n";
+        return "Disciplina: " + super.getNome() + "\nCodigo: " + super.getCodigo() + "\nCarga Horaria: " + super.getCargaHoraria() + "\nAno: " + ano + "\nSemestre: " + semestre + "\nProfessor:" + professor.getNome()+ " - " + professor.getCPF() + "\n\n\n";
     }
 
 }

@@ -230,7 +230,7 @@ public class Main {
                             System.out.println("Professor nao encontrado.");
                         else
                         {
-                            System.out.println(tempProf.toString());
+                            System.out.println(tempProf.mostrarDados());
                             System.out.println("Turmas em que o professor ministra:");
                             for(String t : turmasDoProf)
                                 System.out.println(t);

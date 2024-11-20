@@ -92,7 +92,17 @@ public class Main {
                         }
 
                         if (turmas.get(turma).adicionarEstudante(temp))
+                        {
+                            System.out.println("\n");
+                            // adiciona uma nova entrada de notas para o estudante
+                            System.out.println("Entre a nota do estudante nessa turma:");
+                            float nota = sc.nextFloat();
+                            notas.add(new Notas(temp.getCPF()));
+                            notas.get(notas.size() - 1).setTurma(turma);
+                            notas.get(notas.size() - 1).setNota(nota);
+                            System.out.println("\n");
                             System.out.println("Estudante adicionado com sucesso.");
+                        }
                         else
                             System.out.println("Erro ao adicionar estudante.");
 
@@ -116,7 +126,7 @@ public class Main {
 
                     case 3:
 
-                        System.out.println("Voce deseja:\n1- Visualizar lista de estudantes\n2- Visualizar informacoes de um estudante especifico\n3- Voltar");
+                        System.out.println("Voce deseja:\n1- Visualizar lista de estudantes\n2- Visualizar informacoes de um estudante especifico\n3- Atualizar CRA de um estudante\n4- Voltar");
                         int opt2 = sc.nextInt();
                         sc.nextLine();
 
@@ -141,6 +151,7 @@ public class Main {
                                 {
                                     System.out.println(tempEst.mostrarDados());
                                     System.out.println("Notas do estudante:");
+                                    
                                     for(Notas n : notas)
                                         if(n.getAlunoCPF().equals(CPF))
                                             n.printNota();
@@ -150,6 +161,37 @@ public class Main {
                                 }
                             }
                         }
+                        else if (opt2 == 3)
+                        {
+                            System.out.println("Digite o CPF do estudante:");
+                            CPF = sc.nextLine();
+                            Float media = 0f;
+                            // procura o estudante na lista de notas
+                            for(Notas n : notas)
+                            {
+                                if(n.getAlunoCPF().equals(CPF))
+                                {
+                                    media = n.getMedia();
+                                    break;
+                                }
+                            }
+
+                            for (Map.Entry<String, Turma> entry : turmas.entrySet())
+                            {
+                                Estudante tempEst = entry.getValue().searchStudent(CPF);
+                                if (tempEst != null)
+                                {
+                                    System.out.println("\n");
+                                    tempEst.setCRA(media);
+                                    System.out.println("CRA atualizado com sucesso. Novo CRA:" + media);
+                                    System.out.println("\n");
+                                    break;
+                                }
+                            }
+                        }
+                        else 
+                            break;
+
                         break;
 
                     case 4:

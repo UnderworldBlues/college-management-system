@@ -388,36 +388,56 @@ public class Main {
                             }
                             break;
                         case 4:
-                            System.out.println("\n\n\n");
-                            System.out.println("Digite o codigo da turma:");
-                            turma = sc.next();
-                            System.out.println("Digite a nota:");
-                            float nota = sc.nextFloat();
-                            for(Notas n : notas)
-                            {
-                                if(n.getAlunoCPF().equals(CPF))
-                                {
-                                    n.addNota(nota, turma);
+                            try {
+                                System.out.println("\n\n\n");
+                                System.out.println("Digite o codigo da turma:");
+                                turma = sc.next();
+                                if(turmas.containsKey(turma)){
+                                    System.out.println("Digite a nota:");
+                                    float nota = sc.nextFloat();
+                                    for(Notas n : notas)
+                                    {
+                                        if(n.getAlunoCPF().equals(CPF))
+                                        {
+                                            n.addNota(nota, turma);
+                                            break;
+                                        }
+                                    }
                                     break;
-                                }
-                            }
+                                }else
+                                    throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
 
-                        case 5:
-                            System.out.println("\n\n\n");
-                            System.out.println("Digite o codigo da turma:");
-                            turma = sc.next();
-                            System.out.println("Digite a nota:");
-                            nota = sc.nextFloat();
-                            for(Notas n : notas)
+                            }catch(TurmaNaoEncontrada e)
                             {
-                                if(n.getAlunoCPF().equals(CPF))
-                                {
-                                    n.setNota(nota);
-                                    n.setTurma(turma);
-                                    break;
-                                }
+                                System.out.println(e.getMessage());
+                                System.out.println("\n\n\n");
                             }
-                            break;
+                        case 5:
+                            try {
+                                System.out.println("\n\n\n");
+                                System.out.println("Digite o codigo da turma:");
+                                turma = sc.next();
+                                if(!turmas.containsKey(turma))
+                                    throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
+
+                                System.out.println("Digite a nota:");
+                                Float nota = sc.nextFloat();
+                                for(Notas n : notas)
+                                {
+                                    if(n.getAlunoCPF().equals(CPF))
+                                    {
+                                        n.setNota(nota);
+                                        n.setTurma(turma);
+                                        break;
+                                    }
+                                }
+                                break;
+
+                            }catch(TurmaNaoEncontrada e)
+                            {
+                                System.out.println(e.getMessage());
+                                System.out.println("\n\n\n");
+                            }
 
                         default:
                             System.out.println("Opcao invalida.");
@@ -489,7 +509,7 @@ public class Main {
             case 1:
                 // pega dados do usuario
                 System.out.println("Digite o nome do estudante:");
-                String nome = sc.next();
+                String nome = sc.nextLine();
                 System.out.println("Digite a data de nascimento do estudante:");
                 String dataNascimento = sc.next();
                 System.out.println("Digite o CPF do estudante:");
@@ -505,7 +525,7 @@ public class Main {
             case 2:
                 // pega dados do usuario
                 System.out.println("Digite o nome do estudante:");
-                nome = sc.next();
+                nome = sc.nextLine();
                 System.out.println("Digite a data de nascimento do estudante:");
                 dataNascimento = sc.next();
                 System.out.println("Digite o CPF do estudante:");

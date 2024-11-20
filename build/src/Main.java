@@ -580,7 +580,7 @@ public class Main {
 
         Map<String, Turma> turmas = new HashMap<>();
         // abre o arquivo
-        try(BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Leonardo\\Downloads\\college-management-system-main (2)\\college-management-system-main\\build\\src\\data.txt")))
+        try(BufferedReader reader = new BufferedReader(new FileReader("data.txt")))
         {
             // o arquivo é estruturado da seguinte maneira: nome da turma; info da disciplina; info do professor; ano; semestre
             // e as informações dos estudantes.
@@ -641,7 +641,7 @@ public class Main {
         // criamos uma lista de notas
         ArrayList<Notas> notas = new ArrayList<>();
         // abrimos o arquivo
-        try(BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Leonardo\\Downloads\\college-management-system-main (2)\\college-management-system-main\\build\\src\\dataNotas.txt")))
+        try(BufferedReader reader = new BufferedReader(new FileReader("dataNotas.txt")))
         {
             // o arquivo é estruturado da seguinte maneira: CPF do aluno; turma; nota
             String buffer = reader.readLine();
@@ -675,7 +675,7 @@ public class Main {
     // função pra salvar as turmas
     public static void writeTurmas(Map<String, Turma> turmas)
     {
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Leonardo\\Downloads\\college-management-system-main (2)\\college-management-system-main\\build\\src\\data.txt")))
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("data.txt")))
         {
             for(Map.Entry<String, Turma> entry : turmas.entrySet())
             {
@@ -722,7 +722,7 @@ public class Main {
     // função pra salvar as notas
     public static void writeNotas(ArrayList<Notas> notas)
     {
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Leonardo\\Downloads\\college-management-system-main (2)\\college-management-system-main\\build\\src\\dataNotas.txt")))
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("dataNotas.txt")))
         {
             for(Notas n : notas)
             {

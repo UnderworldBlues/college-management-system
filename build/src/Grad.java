@@ -31,7 +31,7 @@ public class Grad extends Estudante implements Exibivel, ToTXT{
 
     @Override
     public String toTXT() {
-       return  this.nome + "," + this.dataNascimento + "," + this.CPF + "," + this.CRA + "," + this.estagio + "," + this.dataInicioEstagio;
+       return  this.nome + "," + this.dataNascimento + "," + this.CPF + "," + this.CRA + "," + this.estagio + "," + this.dataInicioEstagio + ";";
     }
 
 }

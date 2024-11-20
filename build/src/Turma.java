@@ -37,6 +37,18 @@ public class Turma extends Disciplina implements Exibivel{
         this.semestre = semestre;
     }
 
+    public String getDisciplinaNome() {
+        return super.getNome();
+    }
+
+    public String getDisciplinaCodigo() {
+        return super.getCodigo();
+    }
+
+    public String getDisciplinaCargaHoraria() {
+        return super.getCargaHoraria();
+    }
+
     public List<Estudante> getAlunos() {
         return alunos;
     }
@@ -68,6 +80,15 @@ public class Turma extends Disciplina implements Exibivel{
             }
         }
         return false;
+    }
+
+    public Estudante buscarEstudante(String CPF) {
+        for (Estudante aluno : alunos) {
+            if (aluno.getCPF().equals(CPF)) {
+                return aluno;
+            }
+        }
+        return null;
     }
 
     public void showStudentList() {

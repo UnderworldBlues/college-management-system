@@ -1,16 +1,30 @@
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.io.BufferedReader;
-import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         int opt;
         Scanner sc = new Scanner(System.in);
+        // lista de notas
+        ArrayList<Notas> notas = populateNotas();
+        if (notas == null) 
+        {
+            System.out.println("Erro ao popular notas. Too bad!");
+            sc.close();
+            System.exit(1);
+        }
+        // mapa de turmas
         Map<String, Turma> turmas = populate();
+        if (turmas == null) 
+        {
+            System.out.println("Erro ao popular turmas. Too bad!");
+            sc.close();
+            System.exit(1);
+        }
 
         System.out.println("Bem vindo.");
         while (true) {
@@ -18,27 +32,25 @@ public class Main {
             opt = sc.nextInt();
             switch (opt) {
                 case 1:
-                    
-                    System.out.println("\n\n\n");
-                    studentMenu(turmas);
+
+                    studentMenu(turmas, notas, sc);
                     break;
                 
                 case 2:
                     
-                    System.out.println("\n\n\n");
-                    teacherMenu(turmas);
+                    teacherMenu(turmas, sc);
                     break;
                 
                 case 3:
-                    
-                    System.out.println("\n\n\n");               
-                    classMenu(turmas);
+                               
+                    classMenu(turmas, sc);
                     break;
                 
                 case 4:
-                    
-                    System.out.println("\n\n\n");
                     System.out.println("buh-bye!");
+                    System.out.println("==================================");
+                    writeTurmas(turmas);
+                    writeNotas(notas);
                     sc.close();
                     System.exit(0);
                 
@@ -51,468 +63,273 @@ public class Main {
 
     }
 
-    // cria entradas estaticas para turmas
-    private static Map<String, Turma> populate() {
-
-        Map<String, Turma> turmas = new HashMap<>();
-
-        String arq1 = "C:\\TrabFinalPOO\\TrabFinal\\college-management-system-main\\build\\src\\estudante1.txt";
-        ArrayList<Estudante> alunosArray1 = new ArrayList<Estudante>();
-
-        try(BufferedReader leitor = new BufferedReader(new FileReader(arq1))){
-        
-            String linha;
-            while((linha = leitor.readLine()) != null){
-              
-                String[] separa = linha.split(",");
-              
-                if(separa.length == 6){
-                Grad aluno = new Grad(separa[0].trim(), separa[1].trim(), separa[2].trim(),
-                 Float.parseFloat(separa[3].trim()), separa[4].trim(), separa[5].trim());
-                alunosArray1.add(aluno);
-               
-              }
-
-            }
-         } catch(IOException e) {
-            System.out.println("Erro ao ler arquivo");
-            System.out.println(e.getMessage());
-         }
-
-
-        String arq2 = "C:\\TrabFinalPOO\\TrabFinal\\college-management-system-main\\build\\src\\estudante2.txt";
-        ArrayList<Estudante> alunosArray2 = new ArrayList<Estudante>();
-
-        try(BufferedReader leitor = new BufferedReader(new FileReader(arq2))){
-        
-            String linha;
-            while((linha = leitor.readLine()) != null){
-              
-                String[] separa = linha.split(",");
-              
-                if(separa.length == 6){
-                 Grad aluno = new Grad(separa[0].trim(), separa[1].trim(), separa[2].trim(),
-                  Float.parseFloat(separa[3].trim()), separa[4].trim(), separa[5].trim());
-                 alunosArray2.add(aluno);
-                 
-              }
-
-            }
-         } catch(IOException e) {
-            System.out.println("Erro ao ler arquivo");
-            System.out.println(e.getMessage());
-         }
-
-
-        String arq3 = "C:\\TrabFinalPOO\\TrabFinal\\college-management-system-main\\build\\src\\estudante3.txt";
-        ArrayList<Estudante> alunosArray3 = new ArrayList<Estudante>();
-
-        try(BufferedReader leitor = new BufferedReader(new FileReader(arq3))){
-        
-            String linha;
-            while((linha = leitor.readLine()) != null){
-              
-                String[] separa = linha.split(",");
-              
-                if(separa.length == 6){
-                 PostGrad aluno = new PostGrad(separa[0].trim(), separa[1].trim(), separa[2].trim(),
-                  Float.parseFloat(separa[3].trim()), separa[4].trim(), separa[5].trim());
-                 alunosArray3.add(aluno);
-                 
-              }
-
-            }
-         } catch(IOException e) {
-            System.out.println("Erro ao ler arquivo");
-            System.out.println(e.getMessage());
-         }
-          
-
-        String arq4 = "C:\\TrabFinalPOO\\TrabFinal\\college-management-system-main\\build\\src\\professor.txt";
-        ArrayList<Professor> professorArray = new ArrayList<Professor>();
-
-        try(BufferedReader leitor = new BufferedReader(new FileReader(arq4))){
-        
-            String linha;
-            while((linha = leitor.readLine()) != null){
-              
-                String[] separa = linha.split(",");
-              
-                if(separa.length == 5){
-                 Professor professor = new Professor(separa[0].trim(), separa[1].trim(), separa[2].trim(),
-                  separa[3].trim(), separa[4].trim());
-                 professorArray.add(professor);
-                }
-
-            }
-         } catch(IOException e) {
-            System.out.println("Erro ao ler arquivo");
-            System.out.println(e.getMessage());
-         }
-         
-         
-        Turma turma1 = new Turma(alunosArray1, professorArray.get(0), 2021, 1, "POO", "123", "60");
-        Turma turma2 = new Turma(alunosArray2, professorArray.get(1), 2021, 1, "IA", "456", "60");
-        Turma turma3 = new Turma(alunosArray3, professorArray.get(2), 2021, 1, "BD", "789", "60");
-        
-
-        turmas.put("COMP69", turma1);
-        turmas.put("COMP70", turma2);
-        turmas.put("COMP71", turma3);
-
-        return turmas;
-
-    }
-
-
-
-    private static void studentMenu(Map<String, Turma> turmas) {
-
-        Scanner sc = new Scanner(System.in);
-
+    private static void studentMenu(Map<String, Turma> turmas, ArrayList<Notas> notas, Scanner sc) {
+        System.out.println("=======================");
         while (true) {
-            System.out.println("\n\n\n");
-            
+            System.out.println("Escolha uma opcao:\n1- Adicionar estudante\n2- Remover estudante\n3- Visualizar informacoes de estudante\n4- Sair");
+            int opt = sc.nextInt();
             try {
-                System.out.println("Escolha uma opcao:\n1- Adicionar estudante da graduaçao\n2- Adicionar estudante da pos graduaçao\n3- Remover estudante\n4- Visualizar informacoes de estudante\n5- Sair");
-                int opt = sc.nextInt();
-                sc.nextLine();
-                String turma;
-                Estudante temp;
-                Persistencia p;
                 switch (opt) {
                     case 1:
-                        
-                        System.out.println("\n\n\n");
-                        temp = getStudentDataGraduacao();
+
+                        Estudante temp = getStudentData(sc);
                         if (temp == null) {
                             System.out.println("Erro no cadastro do estudante.");
                             break;
                         }
 
                         System.out.println("Digite o codigo da turma que deseja adicionar o estudante:");
-                        turma = sc.nextLine();
+                        String turma = sc.next();
                         if (!turmas.containsKey(turma)) {
                             throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
                         }
-                        
-                        if (turma.compareTo("COMP69") == 0 || turma.compareTo("COMP70") == 0){
-                            if (turmas.get(turma).adicionarEstudante(temp))
-                                 System.out.println("Estudante adicionado com sucesso.");
-                            else
-                                 System.out.println("Erro ao adicionar estudante.");
-                        } else {
-                            System.out.println("Turma Indisponivel.");
-                        }
 
-                        if (turma.compareTo("COMP69") == 0) {
-                            p = new Persistencia("C:\\TrabFinalPOO\\TrabFinal\\college-management-system-main\\build\\src\\estudante1.txt");
-                            p.escreverArq1(temp);
-                        } else {
-                            p = new Persistencia("C:\\TrabFinalPOO\\TrabFinal\\college-management-system-main\\build\\src\\estudante2.txt");
-                            p.escreverArq2(temp);
-                        }
-
-                        System.out.println("\n\n\n");
+                        if (turmas.get(turma).adicionarEstudante(temp))
+                            System.out.println("Estudante adicionado com sucesso.");
+                        else
+                            System.out.println("Erro ao adicionar estudante.");
 
                         break;
 
                     case 2:
-                          
-                        System.out.println("\n\n\n");
-                        temp = getStudentDataPostGrad();
-                        if (temp == null) {
-                            System.out.println("Erro no cadastro do estudante.");
-                            System.out.println("\n\n\n");
-                            break;
-                        }
 
-                        System.out.println("Digite o codigo da turma que deseja adicionar o estudante:");
-                        turma = sc.nextLine();
-                        if (!turmas.containsKey(turma)) {
-                            throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
-                        }
-                        if (turma.compareTo("COMP71") == 0){
-                            if (turmas.get(turma).adicionarEstudante(temp))
-                                System.out.println("Estudante adicionado com sucesso.");
-                            else
-                                System.out.println("Erro ao adicionar estudante.");
-                        } else {
-                            System.out.println("Turma Indisponivel.");
-                        }      
-
-                        if (turma.compareTo("COMP71") == 0){
-                            p = new Persistencia("C:\\TrabFinalPOO\\TrabFinal\\college-management-system-main\\build\\src\\estudante3.txt");
-                            p.escreverArq3(temp);
-                        }
-
-                        System.out.println("\n\n\n");
-
-                        break;
-
-                    case 3:
-                         
-                        System.out.println("\n\n\n");
                         System.out.println("Digite o codigo da turma do estudante que deseja remover:");
-                        turma = sc.nextLine();
+                        turma = sc.next();
                         if (!turmas.containsKey(turma)) {
                             throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
                         }
                         System.out.println("Digite o CPF do estudante que deseja remover:");
-                        String CPF = sc.nextLine();
+                        String CPF = sc.next();
 
                         if (turmas.get(turma).removerEstudante(CPF))
                             System.out.println("Estudante removido com sucesso.");
                         else
                             System.out.println("Erro ao remover estudante.");
-
-
-                            System.out.println("\n\n\n");
-
                         break;
 
-                    case 4:
-                                
-                        System.out.println("\n\n\n");
+                    case 3:
+
                         System.out.println("Voce deseja:\n1- Visualizar lista de estudantes\n2- Visualizar informacoes de um estudante especifico\n3- Voltar");
                         int opt2 = sc.nextInt();
-                        sc.nextLine();
 
                         if (opt2 == 1) {
                             System.out.println("Digite o codigo da turma:");
-                            turma = sc.nextLine();
+                            turma = sc.next();
                             if (turmas.containsKey(turma))
                                 turmas.get(turma).showStudentList();
                             else
                                 throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
-                        } else if (opt2 == 2) {
-                            System.out.println("Digite o codigo da turma:");
-                            turma = sc.nextLine();
-                            if (turmas.containsKey(turma)) {
-                                System.out.println("Digite o CPF do estudante:");
-                                CPF = sc.nextLine();
-                                temp = turmas.get(turma).searchStudent(CPF);
-                                if (temp == null)
-                                    System.out.println("Estudante nao encontrado.");
-                                else
-                                    System.out.println(temp);
-                            } else
-                                throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
+                        } 
+                        else if (opt2 == 2) 
+                        {
+                            System.out.println("Digite o CPF do estudante:");
+                            CPF = sc.next();
+                            // procura o estudante em todas as turmas
+                            for (Map.Entry<String, Turma> entry : turmas.entrySet()) 
+                            {
+                                Estudante tempEst = entry.getValue().searchStudent(CPF);
+                                // no primeiro acerto, printa as informações do estudante e suas notas
+                                if (tempEst != null) 
+                                {
+                                    System.out.println(tempEst.mostrarDados());
+                                    System.out.println("Notas do estudante:");
+                                    for(Notas n : notas)
+                                        if(n.getAlunoCPF().equals(CPF))
+                                            n.printNota();
+
+                                    // quebra o loop
+                                    break;
+                                }
+                            }
                         }
-
-                        System.out.println("\n\n\n");
-
                         break;
 
-                    case 5:
+                    case 4:
                         // volta para o menu principal;
-                        System.out.println("\n\n\n");
-                        System.out.println("Voltando para o Menu Principal.");
-                        System.out.println("\n\n\n");
-                         return; 
+                        System.out.println("Voltando ao menu principal...");
+                        System.out.println("=======================");
+                        return;
 
                     default:
-                        
-                        System.out.println("\n\n\n");
                         System.out.println("Opcao invalida.");
-                        System.out.println("\n\n\n");
                 }
-            } catch (TurmaNaoEncontrada e) {
+            } 
+            catch (TurmaNaoEncontrada e) 
+            {
                 System.out.println(e.getMessage());
-                System.out.println("\n\n\n");
             }
-           // sc.close();
         }
     }
 
-    private static void teacherMenu(Map<String, Turma> turmas) {
-        Scanner sc = new Scanner(System.in);
+    private static void teacherMenu(Map<String, Turma> turmas, Scanner sc) {
+        System.out.println("=======================");
+        System.out.println("Voce deseja:\n1- Adicionar professor\n2- Remover professor\n3- Visualizar informacoes de professor\n4- Voltar");
+        int opt = sc.nextInt();
+        try {
+            while (true)
+                switch (opt) {
+                    case 1:
+
+                        Professor temp = getProfessorData(sc);
+
+                        System.out.println("Digite o codigo da turma que deseja adicionar o professor:");
+                        String turma = sc.next();
+                        if (turmas.containsKey(turma))
+                        {
+                            turmas.get(turma).setProfessor(temp);
+                            System.out.println("Professor adicionado com sucesso!");
+                        }
+                        else
+                            throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
+                        break;
+
+                    case 2:
+                        System.out.println("Digite o codigo da turma do professor que deseja remover:");
+                        turma = sc.next();
+                        if (turmas.containsKey(turma)){
+                            turmas.get(turma).setProfessor(null);
+                        }
+                        else
+                            throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
+                        break;
+
+                    case 3:
+
+                        System.out.println("Digite o CPF do professor:");
+                        String CPF = sc.next();
+                        int marker = 0; // pra garantir q tempProf só seja setado uma vez
+                        Professor tempProf = null;
+                        ArrayList<String> turmasDoProf = new ArrayList<>();
+
+                        // pega as turmas do professor
+                        for (Map.Entry<String, Turma> entry : turmas.entrySet()) {
+                            if (entry.getValue().getProfessor() != null && entry.getValue().getProfessor().getCPF().equals(CPF))
+                            {
+                                // toda vez que o professor aparecer, adiciona a turma na lista
+                                turmasDoProf.add(entry.getKey());
+                                if(marker == 0)
+                                {
+                                    tempProf = entry.getValue().getProfessor();
+                                    marker++;
+                                }
+                            }
+                        }
+
+                        if (tempProf == null)
+                            System.out.println("Professor nao encontrado.");
+                        else
+                        {
+                            System.out.println(tempProf.toString());
+                            System.out.println("Turmas em que o professor ministra:");
+                            for(String t : turmasDoProf)
+                                System.out.println(t);
+                        }
+
+                        break;
+
+                    case 4:
+                        System.out.println("Voltando ao menu principal...");
+                        System.out.println("=======================");
+                        return;
+
+                    default:
+                        System.out.println("opcao invalida");
+                }
+        } catch (TurmaNaoEncontrada e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    private static void classMenu(Map<String, Turma> turmas, Scanner sc) {
         
         while (true) {
-            System.out.println("\n\n\n"); 
+          System.out.println("\n\n\n"); 
+            
             try {
-                
-                System.out.println("Você deseja:\n1- Adicionar professor\n2- Remover professor\n3- Visualizar informações de professor\n4- Voltar");
+                System.out.println("Voce deseja:\n1- Adicionar uma turma\n2- Visualizar as informacoes de uma turma\n3- Remover uma turma\n4- Voltar");
                 int opt = sc.nextInt();
-                sc.nextLine(); 
-                
-                
+                sc.nextLine();
+                String turma;
+
                 switch (opt) {
                     case 1:
                         
                         System.out.println("\n\n\n");
-                        Professor temp = getProfessorData();
-                        System.out.println("Digite o código da turma que deseja adicionar o professor:");
-                        String turma = sc.nextLine();
-                        if (turmas.containsKey(turma)) {
-                            turmas.get(turma).setProfessor(temp);
-                            Persistencia p = new Persistencia("C:\\TrabFinalPOO\\TrabFinal\\college-management-system-main\\build\\src\\professor.txt");
-                            p.escreverArq4(temp);
-                            System.out.println("Professor adicionado com sucesso!");
-                        } else {
-                            throw new TurmaNaoEncontrada("Turma " + turma + " não encontrada.");
+                        System.out.println("Digite o codigo da turma:");
+                        String codigo = sc.nextLine();
+                        if (turmas.containsKey(codigo)) {
+                            System.out.println("Turma ja existente.");
+                            break;
                         }
+                        System.out.println("Digite o ano da turma:");
+                        int ano = sc.nextInt();
+                        System.out.println("Digite o semestre da turma:");
+                        int semestre = sc.nextInt();
+                        System.out.println("Digite o nome da disciplina:");
+                        String disNome = sc.nextLine();
+                        System.out.println("Digite o codigo da disciplina:");
+                        String disCodigo = sc.nextLine();
+                        System.out.println("Digite a carga horaria da disciplina:");
+                        String disCargaHoraria = sc.nextLine();
+                        Professor prof = getProfessorData(sc);
+                        turmas.put(codigo, new Turma(new ArrayList<Estudante>(100), prof, ano, semestre, disNome, disCodigo, disCargaHoraria));
                         System.out.println("\n\n\n");
+
                         break;
-    
+
                     case 2:
                         
                         System.out.println("\n\n\n");
-                        System.out.println("Digite o código da turma do professor que deseja remover:");
+                        System.out.println("Digite o codigo da turma:");
                         turma = sc.nextLine();
-                        if (turmas.containsKey(turma)) {
-                            turmas.get(turma).setProfessor(null);
-                            System.out.println("Professor removido com sucesso!");
-                        } else {
-                            throw new TurmaNaoEncontrada("Turma " + turma + " não encontrada.");
-                        }
-                        System.out.println("\n\n\n");
-                        break;
-    
-                    case 3:
-                        System.out.println("\n\n\n");
-                        System.out.println("Você deseja:\n1- Visualizar informações de um professor específico\n2- Visualizar professores de todas as turmas\n3- Voltar");
-                        int opt2 = sc.nextInt();
-                        sc.nextLine(); 
-                        if (opt2 == 1) {
-                            System.out.println("Digite o código da turma:");
-                            turma = sc.nextLine();
-                            if (turmas.containsKey(turma)) {
-                                Professor prof = turmas.get(turma).getProfessor();
-                                if (prof != null) {
-                                    System.out.println(prof.mostrarDados());
-                                } else {
-                                    System.out.println("Nenhum professor atribuído a esta turma.");
-                                }
-                            } else {
-                                throw new TurmaNaoEncontrada("Turma " + turma + " não encontrada.");
-                            }
-                        } else if (opt2 == 2) {
-                            for (Map.Entry<String, Turma> entry : turmas.entrySet()) {
-                                System.out.println("Turma: " + entry.getKey());
-                                Professor prof = entry.getValue().getProfessor();
-                                System.out.println(prof != null ? "Professor: " + prof.mostrarDados() : "Professor: Nenhum professor atribuído.");
-                            }
-                        } else {
-                            System.out.println("Voltando...");
-                        }
-                        System.out.println("\n\n\n");
-                        break;
-    
-                    case 4:
+                        if (turmas.containsKey(turma))
+                            System.out.println(turmas.get(turma).mostrarDados());
+                        else
+                            throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
                         
                         System.out.println("\n\n\n");
-                        System.out.println("Voltando ao menu principal...");
+
+                        break;
+
+                    case 3:
+                        
+                        System.out.println("\n\n\n");
+                        System.out.println("Digite o codigo da turma:");
+                        turma = sc.nextLine();
+                        if (turmas.containsKey(turma))
+                            turmas.remove(turma);
+                        else
+                            throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
+                        
+                        System.out.println("Turma removida com sucesso.");
+                        System.out.println("\n\n\n");
+                        
+                        break;
+
+                    case 4:
+
+                        System.out.println("\n\n\n");
+                        System.out.println("Voltando ao Menu Anterior.");
+                        System.out.println("=======================");
                         System.out.println("\n\n\n");
                         return;
-    
+                    
                     default:
                         
                         System.out.println("\n\n\n");
-                        System.out.println("Opção inválida.");
+                        System.out.println("Opçao Invalida.");
                         System.out.println("\n\n\n");
                 }
-            } catch (TurmaNaoEncontrada e) {
-                
+            }catch (TurmaNaoEncontrada e)
+            {
                 System.out.println(e.getMessage());
                 System.out.println("\n\n\n");
             }
-       //  sc.close();
-        }
-    }
-    
-    private static void classMenu(Map<String, Turma> turmas) {
-        Scanner sc = new Scanner(System.in);
-        
-        while (true) {
-          System.out.println("\n\n\n"); 
-        
-        try {
-            System.out.println("Voce deseja:\n1- Adicionar uma turma\n2- Visualizar as informacoes de uma turma\n3- Remover uma turma\n4- Voltar");
-            int opt = sc.nextInt();
-            sc.nextLine();
-            String turma;
-
-            switch (opt) {
-                case 1:
-                    
-                    System.out.println("\n\n\n");
-                    System.out.println("Digite o codigo da turma:");
-                    String codigo = sc.nextLine();
-                    if (turmas.containsKey(codigo)) {
-                        System.out.println("Turma ja existente.");
-                        break;
-                    }
-                    System.out.println("Digite o ano da turma:");
-                    int ano = sc.nextInt();
-                    System.out.println("Digite o semestre da turma:");
-                    int semestre = sc.nextInt();
-                    System.out.println("Digite o nome da disciplina:");
-                    String disNome = sc.nextLine();
-                    System.out.println("Digite o codigo da disciplina:");
-                    String disCodigo = sc.nextLine();
-                    System.out.println("Digite a carga horaria da disciplina:");
-                    String disCargaHoraria = sc.nextLine();
-                    Professor prof = getProfessorData();
-                    turmas.put(codigo, new Turma(new ArrayList<Estudante>(100), prof, ano, semestre, disNome, disCodigo, disCargaHoraria));
-                    System.out.println("\n\n\n");
-
-                    break;
-
-                case 2:
-                    
-                    System.out.println("\n\n\n");
-                    System.out.println("Digite o codigo da turma:");
-                    turma = sc.nextLine();
-                    if (turmas.containsKey(turma))
-                        System.out.println(turmas.get(turma).mostrarDados());
-                    else
-                        throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
-                    
-                    System.out.println("\n\n\n");
-
-                    break;
-
-                case 3:
-                     
-                    System.out.println("\n\n\n");
-                    System.out.println("Digite o codigo da turma:");
-                    turma = sc.nextLine();
-                    if (turmas.containsKey(turma))
-                        turmas.remove(turma);
-                    else
-                        throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
-                       
-                    System.out.println("Turma removida com sucesso.");
-                    System.out.println("\n\n\n");
-                    
-                    break;
-
-                case 4:
-
-                    System.out.println("\n\n\n");
-                    System.out.println("Voltando ao Menu Anterior.");
-                    System.out.println("\n\n\n");
-                    return;
-                
-                default:
-                    
-                    System.out.println("\n\n\n");
-                    System.out.println("Opçao Invalida.");
-                    System.out.println("\n\n\n");
-            }
-        }catch (TurmaNaoEncontrada e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("\n\n\n");
-        }
-      //sc.close();
+        } 
     } 
-} 
 
-    private static Professor getProfessorData() {
+    private static Professor getProfessorData(Scanner sc) {
         System.out.println("\n\n\n");
-        Scanner sc = new Scanner(System.in);
         System.out.println("Digite o nome do professor:");
         String nome = sc.nextLine();
         System.out.println("\n");
@@ -527,113 +344,226 @@ public class Main {
         System.out.println("\n");
         System.out.println("Digite o departamento do professor:");
         String departamento = sc.nextLine();
-       // sc.close();
         System.out.println("\n\n\n");
         return new Professor(nome, dataNascimento, CPF, inicioContrato, departamento);
     }
 
+    private static Estudante getStudentData(Scanner sc) {
 
-    private static Estudante getStudentDataGraduacao() {
-        
-        System.out.println("\n\n\n");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Voce deseja:\n1- Continuar\n2- Voltar");
+        System.out.println("Voce deseja:\n1- Adicionar estudante da graduacao\n2- Adicionar estudante da pos graduacao\n3-Voltar");
         int opt = sc.nextInt();
-        sc.nextLine();
-        System.out.println("\n\n\n");
 
         switch (opt) {
-       
             case 1:
                 // pega dados do usuario
                 System.out.println("Digite o nome do estudante:");
-                String nome = sc.nextLine();
-                System.out.println("\n");
+                String nome = sc.next();
                 System.out.println("Digite a data de nascimento do estudante:");
-                String dataNascimento = sc.nextLine();
-                System.out.println("\n");
+                String dataNascimento = sc.next();
                 System.out.println("Digite o CPF do estudante:");
-                String CPF = sc.nextLine();
-                System.out.println("\n");
+                String CPF = sc.next();
                 System.out.println("Digite o CRA do estudante:");
                 Float CRA = sc.nextFloat();
-                sc.nextLine();
-                System.out.println("\n");
                 System.out.println("Digite o nome da empresa de estagio do estudante:");
-                String estagio = sc.nextLine();
-                System.out.println("\n");
+                String estagio = sc.next();
                 System.out.println("Digite a data de inicio do estagio do estudante:");
-                String dataInicioEstagio = sc.nextLine();
-
-                //sc.close();
+                String dataInicioEstagio = sc.next();
                 // cria um objeto do tipo grad temporario
-                System.out.println("\n\n\n");
                 return new Grad(nome, dataNascimento, CPF, CRA, estagio, dataInicioEstagio);
-            
             case 2:
-                System.out.println("Voltando ao Menu Anterior.");
-                //sc.close();
-                System.out.println("\n\n\n");
-                return null;
-            default:
-                System.out.println("Opcao invalida.");
-                System.out.println("\n\n\n");
-                //sc.close();
-                return null;
-        }
-
-    }
-
-    private static Estudante getStudentDataPostGrad(){
-        
-        System.out.println("\n\n\n");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Voce deseja:\n1- Continuar\n2- Voltar");
-        int opt = sc.nextInt();
-        sc.nextLine();
-        System.out.println("\n\n\n");
-
-        switch (opt){
-            case 1:
                 // pega dados do usuario
                 System.out.println("Digite o nome do estudante:");
-                String nome = sc.nextLine();
-                System.out.println("\n");
+                nome = sc.next();
                 System.out.println("Digite a data de nascimento do estudante:");
-                String dataNascimento = sc.nextLine();
-                System.out.println("\n");
+                dataNascimento = sc.next();
                 System.out.println("Digite o CPF do estudante:");
-                String CPF = sc.nextLine();
-                System.out.println("\n");
+                CPF = sc.next();
                 System.out.println("Digite o CRA do estudante:");
-                float CRA = sc.nextFloat();
-                sc.nextLine();
-                System.out.println("\n");
+                CRA = sc.nextFloat();
                 System.out.println("Digite o tema da dissertacao do estudante:");
-                String tema = sc.nextLine();
-                System.out.println("\n");
-                System.out.println("Digite a data de defesa da dissertacao do estudante:");
-                String dataDefesa = sc.nextLine();
-
-                //sc.close();
-                System.out.println("\n\n\n");
+                String tema = sc.next();
                 // cria um objeto do tipo postGrad temporario
-                return new PostGrad(nome, dataNascimento, CPF, CRA, tema, dataDefesa);
-
-            case 2:
+                return new PostGrad(nome, dataNascimento, CPF, CRA, tema);
+            case 3:
                 System.out.println("Voltando ao Menu Anterior.");
-               // sc.close();
-                System.out.println("\n\n\n");
                 return null;
-
             default:
                 System.out.println("Opcao invalida.");
-                //sc.close();
+
                 return null;
-            
         }
-        
-                
+
     }
 
+
+    // cria entradas estaticas para turmas
+    private static Map<String, Turma> populate() {
+
+            Map<String, Turma> turmas = new HashMap<>();
+            // abre o arquivo
+            try(BufferedReader reader = new BufferedReader(new FileReader("data.txt")))
+            {
+                // o arquivo é estruturado da seguinte maneira: nome da turma; info da disciplina; info do professor; ano; semestre
+                // e as informações dos estudantes. 
+                String buffer = reader.readLine();
+                while(buffer != null)
+                {   
+                    // pega o nome da turma
+                    String turmaNome = buffer;
+                    // pega as informações da disciplina
+                    String[] disciplina = reader.readLine().split(",");
+                    // pega as informações do professor
+                    String[] professor = reader.readLine().split(",");
+                    // pega o ano e o semestre
+                    int ano = Integer.parseInt(reader.readLine());
+                    int semestre = Integer.parseInt(reader.readLine());
+                    // pega as informações dos estudantes
+                    String[] alunos = reader.readLine().split(";");
+                    // pra isso, criamos uma lista de estudantes
+                    ArrayList<Estudante> estudantes = new ArrayList<>();
+                    // iteramos sobre os estudantes
+                    for(String aluno : alunos)
+                    {
+                        // particionamos as informações do estudante
+                        String[] info = aluno.split(",");
+                        Float CRA = Float.parseFloat(info[3]);
+    
+                        // se o aluno for da gradução, ele tem 6 campos de informação, se for da pós, ele tem 5
+                        if(info.length == 6)
+                            estudantes.add(new Grad(info[0], info[1], info[2], CRA, info[4], info[5]));
+                        else
+                            estudantes.add(new PostGrad(info[0], info[1], info[2], CRA, info[4]));
+                        
+                    }
+    
+                    Professor prof = new Professor(professor[0], professor[1], professor[2], professor[3], professor[4]);
+                    // adiciona a turma ao mapa
+                    turmas.put(turmaNome, new Turma(estudantes, prof, ano, semestre, disciplina[0], disciplina[1], disciplina[2]));
+    
+                    // lemos a próxima linha
+                    buffer = reader.readLine();
+                }
+                // fechamos o arquivo
+                reader.close();
+    
+            }catch(IOException e)
+            {
+                System.out.println("Erro ao abrir o arquivo.");
+                return null;
+            }
+            // retornamos o mapa
+            return turmas;
+    
+        }
+
+        // metodo pra popular notas
+    private static ArrayList<Notas> populateNotas() {
+        
+            // criamos uma lista de notas
+            ArrayList<Notas> notas = new ArrayList<>();
+            // abrimos o arquivo
+            try(BufferedReader reader = new BufferedReader(new FileReader("dataNotas.txt")))
+            {
+                // o arquivo é estruturado da seguinte maneira: CPF do aluno; turma; nota
+                String buffer = reader.readLine();
+                while(buffer != null)
+                {
+                    String alunoCPF = buffer;
+                    String[] listaDeNotas = reader.readLine().split(";");
+                    for(String notasItem : listaDeNotas)
+                    {
+                        String[] info = notasItem.split(",");
+                        String turma = info[0];
+                        Float nota = Float.parseFloat(info[1]);
+                        Notas n = new Notas(alunoCPF);
+                        n.setNota(nota);
+                        n.setTurma(turma);
+                        notas.add(n);
+                    }
+                    buffer = reader.readLine();
+                }
+                // fechamos o arquivo
+                reader.close();
+            }catch(IOException e)
+            {
+                System.out.println("Erro ao abrir o arquivo.");
+                return null;
+            }
+            // retornamos a lista
+            return notas;
+    }
+
+    // função pra salvar as turmas
+    public static void writeTurmas(Map<String, Turma> turmas)
+    {
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("data.txt")))
+        {
+            for(Map.Entry<String, Turma> entry : turmas.entrySet())
+            {
+                String disNome = entry.getValue().getDisciplinaNome();
+                String disCodigo = entry.getValue().getDisciplinaCodigo();
+                String disCargaHoraria = entry.getValue().getDisciplinaCargaHoraria();
+                String prof = entry.getValue().getProfessor().toTXT();
+                int ano = entry.getValue().getAno();
+                int semestre = entry.getValue().getSemestre();
+
+
+                writer.write(entry.getKey());
+                writer.newLine();
+                writer.write(disNome + "," + disCodigo + "," + disCargaHoraria);
+                writer.newLine();
+                writer.write(prof);
+                writer.newLine();
+                writer.write(Integer.toString(ano));
+                writer.newLine();
+                writer.write(Integer.toString(semestre));
+                writer.newLine();
+                for(Estudante aluno : entry.getValue().getAlunos())
+                {
+                   if(aluno instanceof Grad)
+                   {
+                       Grad g = (Grad) aluno;
+                       writer.write(g.toTXT());
+                   }
+                   else
+                   {
+                       PostGrad pg = (PostGrad) aluno;
+                       writer.write(pg.toTXT());
+                   }
+                }
+                writer.newLine();
+            }
+            writer.close();
+        }catch(IOException e)
+        {
+            System.out.println("Erro ao salvar as turmas. TOO BAD!");
+        }
+    }
+
+    // função pra salvar as notas
+    public static void writeNotas(ArrayList<Notas> notas)
+    {
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("dataNotas.txt")))
+        {
+            for(Notas n : notas)
+            {
+                writer.write(n.getAlunoCPF());
+                writer.newLine();
+                List<String> notasAluno = n.getTurmas();
+                List<Float> notasAlunoFloat = n.getNotas();
+                int size = notasAluno.size();
+                for(int i = 0; i < size; i++)
+                {
+                    // escreve as notas no formato turma,nota
+                    writer.write(notasAluno.get(i) + "," + Float.toString(notasAlunoFloat.get(i)) + ";");
+                }
+
+                writer.newLine();
+            }
+            writer.close();
+        }catch(IOException e)
+        {
+            System.out.println("Erro ao salvar as notas. TOO BAD!");
+        }
+    }
 }

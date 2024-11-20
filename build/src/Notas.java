@@ -31,6 +31,15 @@ public class Notas {
         return this.turmas;
     }
 
+    public Float getMedia() {
+        float media = 0;
+        int size = this.notas.size();
+        for (int i = 0; i < size; i++) {
+            media += this.notas.get(i);
+        }
+        return media / size;
+    }
+
     // adiciona um valor a nota
     public void addNota(float nota, String turma) {
         int n = this.turmas.size();

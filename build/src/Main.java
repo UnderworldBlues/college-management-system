@@ -28,7 +28,7 @@ public class Main {
 
         System.out.println("Bem vindo.");
         while (true) {
-            System.out.println("Escolha uma opcao:\n1- Estudante\n2- Professor\n3- Turma\n4- Sair");
+            System.out.println("Escolha uma opcao:\n1- Estudante\n2- Professor\n3- Turma\n4- Notas\n5- Sair");
             opt = sc.nextInt();
             switch (opt) {
                 case 1:
@@ -47,6 +47,9 @@ public class Main {
                     break;
                 
                 case 4:
+                    notaMenu(notas, turmas, sc);
+                    break;
+                case 5:
                     System.out.println("buh-bye!");
                     System.out.println("==================================");
                     writeTurmas(turmas);
@@ -163,10 +166,11 @@ public class Main {
 
     private static void teacherMenu(Map<String, Turma> turmas, Scanner sc) {
         System.out.println("=======================");
-        System.out.println("Voce deseja:\n1- Adicionar professor\n2- Remover professor\n3- Visualizar informacoes de professor\n4- Voltar");
-        int opt = sc.nextInt();
         try {
             while (true)
+            {
+                System.out.println("Voce deseja:\n1- Adicionar professor\n2- Remover professor\n3- Visualizar informacoes de professor\n4- Voltar");
+                int opt = sc.nextInt();
                 switch (opt) {
                     case 1:
 
@@ -235,13 +239,14 @@ public class Main {
                     default:
                         System.out.println("opcao invalida");
                 }
+            }
         } catch (TurmaNaoEncontrada e) {
             System.out.println(e.getMessage());
         }
     }
     
     private static void classMenu(Map<String, Turma> turmas, Scanner sc) {
-        
+        System.out.println("=======================");
         while (true) {
           System.out.println("\n\n\n"); 
             
@@ -257,7 +262,8 @@ public class Main {
                         System.out.println("\n\n\n");
                         System.out.println("Digite o codigo da turma:");
                         String codigo = sc.nextLine();
-                        if (turmas.containsKey(codigo)) {
+                        if (turmas.containsKey(codigo)) 
+                        {
                             System.out.println("Turma ja existente.");
                             break;
                         }
@@ -282,8 +288,11 @@ public class Main {
                         System.out.println("\n\n\n");
                         System.out.println("Digite o codigo da turma:");
                         turma = sc.nextLine();
-                        if (turmas.containsKey(turma))
+                        if (turmas.containsKey(turma)){
+                            System.out.println("\n\n\n");
                             System.out.println(turmas.get(turma).mostrarDados());
+                            System.out.println("==================================");
+                        }
                         else
                             throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
                         
@@ -327,6 +336,129 @@ public class Main {
             }
         } 
     } 
+
+    private static void notaMenu(ArrayList<Notas> notas, Map<String, Turma> turmas, Scanner sc) {
+        System.out.println("=======================");
+        while (true) {
+            System.out.println("Escolha uma opcao:\n1- Visualizar notas de um estudante\n2- Visualizar media de uma turma\n3- Sair");
+            int opt = sc.nextInt();
+            switch (opt)
+            {
+                case 1 :
+                    System.out.println("\n\n\n");
+                    System.out.println("Digite o CPF do estudante:");
+                    String CPF = sc.next();
+                    System.out.println("Voce deseja:\n1- Visualizar a nota em uma turma especifica\n2- Visualizar todas as notas\n3- Visualizar a media do aluno\n4- Atualizar a nota de um aluno\n5- Adicionar uma nova nota\n");
+                    int opt2 = sc.nextInt();
+                    switch (opt2)
+                    {
+                        case 1:
+                            System.out.println("\n\n\n");
+                            System.out.println("Digite o codigo da turma:");
+                            String turma = sc.next();
+                            for(Notas n : notas)
+                            {
+                                if(n.getAlunoCPF().equals(CPF))
+                                {
+                                    n.printNota(turma);
+                                    break;
+                                }
+                            }
+                            break;
+                        case 2:
+                            System.out.println("\n\n\n");
+                            for(Notas n : notas)
+                            {
+                                if(n.getAlunoCPF().equals(CPF))
+                                {
+                                    n.printNota();
+                                    break;
+                                }
+                            }
+                            break;
+                        case 3:
+                            System.out.println("\n\n\n");
+                            for(Notas n : notas)
+                            {
+                                if(n.getAlunoCPF().equals(CPF))
+                                {
+                                    System.out.println("Media do aluno: " + n.getMedia());
+                                    break;
+                                }
+                            }
+                            break;
+                        case 4:
+                            System.out.println("\n\n\n");
+                            System.out.println("Digite o codigo da turma:");
+                            turma = sc.next();
+                            System.out.println("Digite a nota:");
+                            float nota = sc.nextFloat();
+                            for(Notas n : notas)
+                            {
+                                if(n.getAlunoCPF().equals(CPF))
+                                {
+                                    n.addNota(nota, turma);
+                                    break;
+                                }
+                            }
+
+                        case 5:
+                            System.out.println("\n\n\n");
+                            System.out.println("Digite o codigo da turma:");
+                            turma = sc.next();
+                            System.out.println("Digite a nota:");
+                            nota = sc.nextFloat();
+                            for(Notas n : notas)
+                            {
+                                if(n.getAlunoCPF().equals(CPF))
+                                {
+                                    n.setNota(nota);
+                                    n.setTurma(turma);
+                                    break;
+                                }
+                            }
+                            break;
+
+                        default:
+                            System.out.println("Opcao invalida.");
+                    }
+                    break;
+
+                case 2:
+                    try{
+                        System.out.println("\n\n\n");
+                        System.out.println("Digite o codigo da turma:");
+                        String turma = sc.next();
+                        if(turmas.containsKey(turma))
+                        {
+                            float media = 0;
+                            int size = 0;
+                            for(Notas n : notas)
+                                if(n.getTurmas().contains(turma))
+                                {
+                                    media += n.getMedia();
+                                    size++;
+                                }
+                            
+                            System.out.println("Media da turma: " + media/size);
+                        }
+                        else
+                            throw new TurmaNaoEncontrada("Turma " + turma + " nao encontrada.");
+                        break;
+
+                    }catch(TurmaNaoEncontrada e)    
+                    {
+                        System.out.println(e.getMessage());
+                        System.out.println("\n\n\n");
+                    }
+                case 3:
+                    System.out.println("Voltando ao menu principal...");
+                    System.out.println("=======================");
+                    return;
+
+            }
+        }
+    }
 
     private static Professor getProfessorData(Scanner sc) {
         System.out.println("\n\n\n");
